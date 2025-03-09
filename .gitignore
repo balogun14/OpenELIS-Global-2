@@ -32,3 +32,4 @@ src/main/resources/adminPassword.txt
 Patient/*
 volume/*
 tools/Liquibase-Outdated
+/build/

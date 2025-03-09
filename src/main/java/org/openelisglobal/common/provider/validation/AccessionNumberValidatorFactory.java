@@ -26,14 +26,13 @@ public class AccessionNumberValidatorFactory implements ConfigurationListener {
 
     public enum AccessionFormat {
         MAIN, GENERAL, SITEYEARNUM, PROGRAMNUM, YEARNUM_SIX, YEARNUM_DASH_SEVEN, YEARNUM_SEVEN, UNFORMATTED, ALT_YEAR,
-        ALPHANUM
+        ALPHANUM, NPA_NUM
     }
 
     private AccessionFormat mainAccessionFormat;
     private IAccessionNumberGenerator mainGenerator;
 
     private IAccessionNumberGenerator getConfiguredMainGenerator() throws LIMSInvalidConfigurationException {
-
         String accessionFormat = ConfigurationProperties.getInstance()
                 .getPropertyValueUpperCase(Property.AccessionFormat);
         boolean mainGeneratorSet = mainGenerator != null;
@@ -71,6 +70,11 @@ public class AccessionNumberValidatorFactory implements ConfigurationListener {
                     mainGenerator = getYearNumValidator(7, null);
                     mainAccessionFormat = AccessionFormat.YEARNUM_SEVEN;
                 }
+            } else if (accessionFormat.equals(AccessionFormat.NPA_NUM.name())) { // Added NPA_NUM case
+                if (!mainGeneratorSet) {
+                    mainGenerator = getNPANumValidator();
+                    mainAccessionFormat = AccessionFormat.NPA_NUM;
+                }
             }
 
             if (mainGenerator == null) {
@@ -84,64 +88,66 @@ public class AccessionNumberValidatorFactory implements ConfigurationListener {
 
     public IAccessionNumberValidator getValidator(AccessionFormat accessionFormat)
             throws LIMSInvalidConfigurationException {
-
         if (accessionFormat.equals(mainAccessionFormat)) {
-            return mainGenerator;
+            return mainGenerator; // mainGenerator also implements IAccessionNumberValidator
         }
         switch (accessionFormat) {
-        case MAIN:
-            return getConfiguredMainGenerator();
-        case GENERAL:
-            return getAllActiveValidator();
-        case ALPHANUM:
-            return getAlphanumValidator();
-        case SITEYEARNUM:
-            return getSiteYearValidator();
-        case PROGRAMNUM:
-            return getProgramValidator();
-        case YEARNUM_SIX:
-            return getYearNumValidator(6, null);
-        case YEARNUM_DASH_SEVEN:
-            return getYearNumValidator(7, '-');
-        case YEARNUM_SEVEN:
-            return getYearNumValidator(7, null);
-        case ALT_YEAR:
-            return getAltYearValidator();
-        default:
-            throw new LIMSInvalidConfigurationException(
-                    "AccessionNumberValidatorFactory: Unable to find validator for " + accessionFormat);
+            case MAIN:
+                return getConfiguredMainGenerator();
+            case GENERAL:
+                return getAllActiveValidator();
+            case ALPHANUM:
+                return getAlphanumValidator();
+            case SITEYEARNUM:
+                return getSiteYearValidator();
+            case PROGRAMNUM:
+                return getProgramValidator();
+            case YEARNUM_SIX:
+                return getYearNumValidator(6, null);
+            case YEARNUM_DASH_SEVEN:
+                return getYearNumValidator(7, '-');
+            case YEARNUM_SEVEN:
+                return getYearNumValidator(7, null);
+            case ALT_YEAR:
+                return getAltYearValidator();
+            case NPA_NUM: // Added NPA_NUM case
+                return getNPANumValidator();
+            default:
+                throw new LIMSInvalidConfigurationException(
+                        "AccessionNumberValidatorFactory: Unable to find validator for " + accessionFormat);
         }
     }
 
     public IAccessionNumberGenerator getGenerator(AccessionFormat accessionFormat)
             throws LIMSInvalidConfigurationException {
-
         if (accessionFormat.equals(mainAccessionFormat)) {
             return mainGenerator;
         }
         switch (accessionFormat) {
-        case MAIN:
-            return getConfiguredMainGenerator();
-        case ALPHANUM:
-            return getAlphanumValidator();
-        case SITEYEARNUM:
-            return getSiteYearValidator();
-        case PROGRAMNUM:
-            return getProgramValidator();
-        case YEARNUM_SIX:
-            return getYearNumValidator(6, null);
-        case YEARNUM_DASH_SEVEN:
-            return getYearNumValidator(7, '-');
-        case YEARNUM_SEVEN:
-            return getYearNumValidator(7, null);
-        case ALT_YEAR:
-            return getAltYearValidator();
-        case GENERAL:
-            throw new LIMSInvalidConfigurationException(
-                    "AccessionNumberValidatorFactory: ALL_ACTIVE unable to be used as a generator ");
-        default:
-            throw new LIMSInvalidConfigurationException(
-                    "AccessionNumberValidatorFactory: Unable to find Generator for " + accessionFormat);
+            case MAIN:
+                return getConfiguredMainGenerator();
+            case ALPHANUM:
+                return getAlphanumValidator();
+            case SITEYEARNUM:
+                return getSiteYearValidator();
+            case PROGRAMNUM:
+                return getProgramValidator();
+            case YEARNUM_SIX:
+                return getYearNumValidator(6, null);
+            case YEARNUM_DASH_SEVEN:
+                return getYearNumValidator(7, '-');
+            case YEARNUM_SEVEN:
+                return getYearNumValidator(7, null);
+            case ALT_YEAR:
+                return getAltYearValidator();
+            case NPA_NUM: // Added NPA_NUM case
+                return getNPANumValidator();
+            case GENERAL:
+                throw new LIMSInvalidConfigurationException(
+                        "AccessionNumberValidatorFactory: ALL_ACTIVE unable to be used as a generator ");
+            default:
+                throw new LIMSInvalidConfigurationException(
+                        "AccessionNumberValidatorFactory: Unable to find Generator for " + accessionFormat);
         }
     }
 
@@ -172,6 +178,11 @@ public class AccessionNumberValidatorFactory implements ConfigurationListener {
 
     private IAccessionNumberGenerator getProgramValidator() {
         return new ProgramAccessionValidator();
+    }
+
+    // New method for NPA_NUM validator/generator
+    private IAccessionNumberGenerator getNPANumValidator() {
+        return new NPANumAccessionValidator();
     }
 
     @Override
