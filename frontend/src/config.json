@@ -1,5 +1,5 @@
 {
-  "title": "NIgerian Port Authority Laboratory LIS",
+  "title": "Nigerian Port Authority Laboratory LIS",
   "loginRedirect": "/login",
   "serverBaseUrl": "/api/OpenELIS-Global"
 }

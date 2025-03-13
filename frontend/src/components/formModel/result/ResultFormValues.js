@@ -40,8 +40,6 @@ export default {
       normal: "",
       normalRange: "",
       notIncludedInWorkplan: "",
-      note: "",
-      pastNotes: "",
       patientInfo: "",
       patientName: "",
       qualifiedDictionaryId: "",

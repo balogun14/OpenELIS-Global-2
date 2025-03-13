@@ -449,7 +449,8 @@ function OEHeader(props) {
                   <HeaderName href="/" prefix="" style={{ padding: "0px" }}>
                     <span id="header-logo">{logo()}</span>
                     <div className="banner">
-                      <h5>{configurationProperties?.BANNER_TEXT}</h5>
+                      {/*<h5>{configurationProperties?.BANNER_TEXT}</h5>*/}
+                      <h5>Nigerian Port Authority LIS</h5>
                       <p>
                         <FormattedMessage id="header.label.version" /> &nbsp;{" "}
                         {configurationProperties?.releaseNumber}

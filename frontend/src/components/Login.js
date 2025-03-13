@@ -59,8 +59,7 @@ function Login(props) {
             <img
               src={`images/openelis_logo_full.png`}
               alt="fullsize logo"
-              width="300"
-              height="56"
+              className="responsive-logo"
             />
           </picture>
         </Column>

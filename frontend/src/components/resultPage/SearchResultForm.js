@@ -948,7 +948,7 @@ export function SearchResults(props) {
       cell: (row, index, column, id) => {
         return renderCell(row, index, column, id);
       },
-      width: "12rem",
+      width: "22rem",
     },
     {
       id: "currentResult",
@@ -956,16 +956,16 @@ export function SearchResults(props) {
       cell: (row, index, column, id) => {
         return renderCell(row, index, column, id);
       },
-      width: "10rem",
+      width: "13rem",
     },
-    {
-      id: "notes",
-      name: intl.formatMessage({ id: "column.name.notes" }),
-      cell: (row, index, column, id) => {
-        return renderCell(row, index, column, id);
-      },
-      width: "25rem",
-    },
+    // {
+    //   id: "notes",
+    //   name: intl.formatMessage({ id: "column.name.notes" }),
+    //   cell: (row, index, column, id) => {
+    //     return renderCell(row, index, column, id);
+    //   },
+    //   width: "25rem",
+    // },
   ];
 
   const renderCell = (row, index, column, id) => {
@@ -1092,27 +1092,27 @@ export function SearchResults(props) {
           </div>
         );
 
-      case "notes":
-        return (
-          <>
-            <div className="note">
-              <TextArea
-                id={"testResult" + row.id + ".note"}
-                name={"testResult[" + row.id + "].note"}
-                //value={props.results.testResult[row.id]?.pastNotes}
-                disabled={false}
-                type="text"
-                labelText=""
-                rows={1}
-                onChange={(e) => handleChange(e, row.id)}
-              ></TextArea>
-              <div
-                className="note"
-                dangerouslySetInnerHTML={{ __html: row.pastNotes }}
-              />
-            </div>
-          </>
-        );
+      // case "notes":
+      //   return (
+      //     <>
+      //       <div className="note">
+      //         <TextArea
+      //           id={"testResult" + row.id + ".note"}
+      //           name={"testResult[" + row.id + "].note"}
+      //           //value={props.results.testResult[row.id]?.pastNotes}
+      //           disabled={false}
+      //           type="text"
+      //           labelText=""
+      //           rows={1}
+      //           onChange={(e) => handleChange(e, row.id)}
+      //         ></TextArea>
+      //         <div
+      //           className="note"
+      //           dangerouslySetInnerHTML={{ __html: row.pastNotes }}
+      //         />
+      //       </div>
+      //     </>
+      //   );
 
       case "result":
         switch (row.resultType) {

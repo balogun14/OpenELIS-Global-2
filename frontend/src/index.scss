@@ -2,27 +2,121 @@
 @use "@carbon/react/scss/theme" with (
   $fallback: themes.$g100,
   $theme: (
-    background: #295785,
-    text-primary: #ffffff,
-    text-secondary: #ffffff,
-    icon-primary: #ffffff,
-    icon-secondary: #ffffff,
-    background-hover: #072655,
-    layer-01: #295785,
-    layer-hover-01: #072655,
+    background: #008242, // Primary Green (Nigerian Flag)
+    text-primary: #ffffff, // White for primary text
+    text-secondary: #f9f9f9, // Light gray for secondary text
+    icon-primary: #ffffff, // White icons
+    icon-secondary: #f9f9f9, // Light gray icons
+    background-hover: #006432, // Darker Green for hover states
+    layer-01: #008242, // Primary Green for layered components
+    layer-hover-01: #006432, // Darker Green for hover states on layers
+    field-01: #ffffff, // White for input fields
+    field-hover-01: #f9f9f9, // Light gray for hover states on input fields
+    border-subtle-00: #006432, // Subtle borders in darker green
+    border-strong-01: #008242, // Strong borders in primary green
+    focus: #ffffff, // Focus outline in white
+    danger: #ff0000, // Red for error states
   )
 );
 
 @use "@carbon/react";
 
+/* General Content Styling */
 .cds--content {
   margin-top: 3rem;
   padding: 0;
-  background-color: #f5f6f8;
+  background-color: var(--cds-background); // Use Carbon's dynamic background variable
 }
 
+/* Login and Change Password Pages */
 .loginPageContent,
 .changePasswordPage {
   padding-top: 3rem;
-  background: var(--cds-background);
+  background: var(--cds-background); // Dynamic background from Carbon theme
+}
+
+/* Override Specific Components */
+button {
+  background: none;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 2px;
+  padding: 5px 10px;
+  border: 1px solid var(--cds-border-strong-01); // Use Carbon's strong border color
+  color: var(--cds-text-primary); // Use Carbon's primary text color
+}
+
+button:hover {
+  background-color: var(--cds-background-hover); // Use Carbon's hover background
+  color: var(--cds-text-inverse); // Inverse text color for contrast
+}
+
+.add_button {
+  color: var(--cds-text-primary);
+  border-color: var(--cds-border-strong-01);
+}
+
+.remove-btn {
+  color: var(--cds-danger); // Use Carbon's danger color for remove buttons
+  border-color: var(--cds-danger);
+}
+
+/* Input Fields */
+.inputText,
+.inputSearch,
+.inputSelect,
+.inputSelect2,
+.inputText2 {
+  --cds-text-primary: var(--cds-text-primary);
+  --cds-text-secondary: var(--cds-text-secondary);
+  border: 1px solid var(--cds-border-subtle-00); // Subtle border for inputs
+  background-color: var(--cds-field-01); // Use Carbon's field background
+}
+
+.inputText:focus,
+.inputSearch:focus,
+.inputSelect:focus,
+.inputSelect2:focus,
+.inputText2:focus {
+  border-color: var(--cds-border-strong-01); // Strong border for focus state
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 130, 66, 0.5); // Subtle glow for focus
+}
+
+/* Error Messages */
+.errorMessage,
+.error {
+  color: var(--cds-danger); // Use Carbon's danger color for errors
+  font-size: 12px;
+}
+
+/* Tables */
+.my-custom-table th {
+  background-color: var(--cds-layer-01); // Use Carbon's layer color
+  color: var(--cds-text-inverse); // Inverse text for contrast
+}
+
+.my-custom-table tbody tr:nth-child(odd) {
+  background-color: var(--cds-field-01); // Use Carbon's field background
+}
+
+/* Side Navigation */
+.custom-sidenav-button {
+  background-color: var(--cds-layer-01); // Use Carbon's layer color
+  color: var(--cds-text-inverse); // Inverse text for contrast
+}
+
+.custom-sidenav-button:hover {
+  background-color: var(--cds-background-hover); // Use Carbon's hover background
+}
+
+.top-level-menu-item > a:hover {
+  background-color: var(--cds-background-hover); // Use Carbon's hover background
+}
+
+/* Toast Notifications */
+.toastDisplay {
+  background-color: var(--cds-layer-01); // Use Carbon's layer color
+  color: var(--cds-text-inverse); // Inverse text for contrast
+  border: 1px solid var(--cds-border-strong-01); // Strong border for notifications
 }
